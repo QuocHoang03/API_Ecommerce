@@ -63,7 +63,6 @@ const getAllProduct = asyncHandler(async (req, res) => {
       delete queryObj[el];
     });
     let queryStr = JSON.stringify(queryObj);
-    console.log(queryStr);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => {
       return `$${match}`;
     });
@@ -72,7 +71,6 @@ const getAllProduct = asyncHandler(async (req, res) => {
     // Sorting
     if (req.query.sort) {
       const sortBy = req.query.sort.split(",").join(" ");
-      console.log(query);
       query = query.sort(sortBy);
     } else {
       query = query.sort("-createdAt");
@@ -95,7 +93,6 @@ const getAllProduct = asyncHandler(async (req, res) => {
       const productCount = await Product.countDocuments();
       if (skip >= productCount) throw new Error("This Page does not exists");
     }
-    console.log(page, limit, skip);
 
     const product = await query;
     res.json(product);
